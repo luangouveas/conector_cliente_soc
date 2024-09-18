@@ -1,7 +1,7 @@
 import { SoapClientType } from '@/services/soap-client'
 import { exportaDadosWs } from '@/services/gateway/soc/exporta-dados'
 
-type FiltrosDadosAso = {
+export type FiltrosDadosAso = {
   dataInicial: string
   dataFinal: string
   filtroTipoData: number
@@ -10,7 +10,7 @@ type FiltrosDadosAso = {
 }
 
 export const ConsultarDadosAsoExame = (soapClient: SoapClientType) => {
-  return async (filtros: FiltrosDadosAso) => {
+  return (filtros: FiltrosDadosAso) => {
     const parametros = {
       tipoSaida: 'json',
       codigo: process.env.CODIGO_DADOS_ASO_EXAME,
@@ -26,6 +26,6 @@ export const ConsultarDadosAsoExame = (soapClient: SoapClientType) => {
       tpExame: '1,2,3,4,5,6,7,8,9',
     }
 
-    return await exportaDadosWs({ soapClient, parametros })
+    return exportaDadosWs({ soapClient, parametros })
   }
 }

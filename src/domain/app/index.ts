@@ -1,9 +1,9 @@
-import { CriarSoapClientType } from '@/services/soap-client'
-import { ConsultarDadosAsoExame } from '../usecases/teste/consultar-aso-exame-soc'
+import { SoapClientType } from '@/services/soap-client'
+import { ConsultarDadosAsoExame } from '../usecases/soc/consultar-aso-exame-soc'
 
 type Deps = {
   repositories: any
-  soapClient: CriarSoapClientType
+  soapClient: SoapClientType
 }
 
 export const App = ({ repositories, soapClient }: Deps) => {

@@ -15,18 +15,11 @@ type RetornoSoapExportaDados = {
   }
 }
 
-export const exportaDadosWs = async ({ soapClient, parametros }: Deps) => {
+export const exportaDadosWs = ({ soapClient, parametros }: Deps) => {
   const wsdl = process.env.WSDL_SOC_EXPORTADADOS as string
-//   const resExportaDados: RetornoSoapExportaDados = await soapClient.execute(wsdl, 'exportaDadosWs', gerarXmlExportaDados(parametros))
-
-//   return resExportaDados.return
-    return pipe(
-        tryCatch(() => soapClient.execute(wsdl, 'exportaDadosWs', gerarXmlExportaDados(parametros)) ,toError),
-        map((retSoapEd: RetornoSoapExportaDados) => retSoapEd.return),
-        mapLeft((err) => )
-    )
-
-
-
-
+  return pipe(
+      tryCatch(() => soapClient.execute(wsdl, 'exportaDadosWs', gerarXmlExportaDados(parametros)) ,toError),
+      map((retSoapEd: RetornoSoapExportaDados) => retSoapEd.return),
+      mapLeft((err) => err)
+  )
 }
