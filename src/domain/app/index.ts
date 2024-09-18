@@ -1,7 +1,13 @@
-import { ConsultarTeste } from '../usecases/teste/consultar-teste'
+import { CriarSoapClientType } from '@/services/soap-client'
+import { ConsultarDadosAsoExame } from '../usecases/teste/consultar-aso-exame-soc'
 
-export const App = () => {
+type Deps = {
+  repositories: any
+  soapClient: CriarSoapClientType
+}
+
+export const App = ({ repositories, soapClient }: Deps) => {
   return {
-    consultarAsoPorFuncionario: ConsultarTeste,
+    consultarDadosAsoExame: ConsultarDadosAsoExame(soapClient),
   }
 }
