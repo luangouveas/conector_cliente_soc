@@ -1,5 +1,6 @@
 import { SoapClientType } from '@/services/soap-client'
-import { exportaDadosWs } from '@/services/gateway/soc/exporta-dados'
+import { exportaDadosWs, RetornoExportaDados } from '@/services/gateway/soc/exporta-dados'
+import { TaskEither } from '@/services/either'
 
 export type FiltrosDadosAso = {
   dataInicial: string
@@ -8,6 +9,8 @@ export type FiltrosDadosAso = {
   codigoFuncionario?: number
   codigoEmpresa: number
 }
+
+type ConsultarDadosAsoExame = (soapClient: SoapClientType) => (filtros: FiltrosDadosAso) => TaskEither<Error, RetornoExportaDados>
 
 export const ConsultarDadosAsoExame = (soapClient: SoapClientType) => {
   return (filtros: FiltrosDadosAso) => {
@@ -18,11 +21,11 @@ export const ConsultarDadosAsoExame = (soapClient: SoapClientType) => {
       empresa: filtros.codigoEmpresa,
       funcionarioInicio: 0,
       funcionarioFim: 99999999,
-      pFuncionario: 0,
-      funcionario: 0,
+      pFuncionario: filtros.codigoFuncionario ? 1 : 0,
+      funcionario: filtros.codigoFuncionario ? filtros.codigoFuncionario : 0,
       dataInicio: filtros.dataInicial,
       dataFim: filtros.dataFinal,
-      pDataIncAso: 3,
+      pDataIncAso: filtros.filtroTipoData,
       tpExame: '1,2,3,4,5,6,7,8,9',
     }
 
